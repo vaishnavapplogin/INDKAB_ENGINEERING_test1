@@ -7,929 +7,226 @@
   <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;500;700;900&family=Barlow:wght@300;400;500&family=Share+Tech+Mono&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --black: #0a0a0a;
-      --dark: #111214;
-      --panel: #181a1d;
-      --border: #2a2d32;
-      --steel: #3a3f47;
-      --mid: #6b7280;
-      --light: #c8cdd6;
-      --white: #f0f2f5;
-      --accent: #c8860a;
-      --accent2: #e8a020;
-      --green: #2d6a4f;
-      --green-light: #52b788;
+      --white:       #ffffff;
+      --off-white:   #f4f4f0;
+      --light-gray:  #ebebE6;
+      --border:      #d4d4ce;
+      --mid:         #7a7a72;
+      --dark-mid:    #4a4a44;
+      --dark:        #1e1e1a;
+      --black:       #111110;
+      --green:       #2d5a2f;
+      --green-dark:  #1e3e20;
+      --green-mid:   #3d7040;
+      --green-light: #5a9e5e;
+      --green-pale:  #e8f0e8;
+      --green-tint:  #f0f6f0;
+      --panel:       #f9f9f6;
+      --panel2:      #f0f0ec;
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
     html { scroll-behavior: smooth; }
 
     body {
-      background: var(--black);
-      color: var(--light);
+      background: var(--white);
+      color: var(--dark);
       font-family: 'Barlow', sans-serif;
       font-weight: 300;
       line-height: 1.6;
       overflow-x: hidden;
     }
 
-    /* ── NOISE OVERLAY ── */
-    body::before {
-      content: '';
-      position: fixed;
-      inset: 0;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
-      pointer-events: none;
-      z-index: 9999;
-      opacity: 0.4;
-    }
-
-    /* ── NAV ── */
+    /* NAV */
     nav {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      z-index: 100;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 5vw;
-      height: 64px;
-      background: rgba(10,10,10,0.92);
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 5vw; height: 64px;
+      background: rgba(255,255,255,0.97);
       backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--border);
+      box-shadow: 0 1px 8px rgba(0,0,0,0.06);
     }
-
-    .nav-brand {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      text-decoration: none;
-    }
-
+    .nav-brand { display: flex; align-items: center; gap: 10px; text-decoration: none; }
     .nav-logo {
-      width: 36px; height: 36px;
-      background: var(--accent);
-      clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+      width: 36px; height: 36px; background: var(--green);
+      clip-path: polygon(50% 0%,100% 25%,100% 75%,50% 100%,0% 75%,0% 25%);
       display: flex; align-items: center; justify-content: center;
     }
+    .nav-logo span { font-family:'Barlow Condensed',sans-serif; font-weight:900; font-size:13px; color:#fff; letter-spacing:-0.5px; }
+    .nav-name { font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:17px; letter-spacing:2px; color:var(--dark); text-transform:uppercase; }
+    .nav-links { display:flex; gap:32px; list-style:none; }
+    .nav-links a { font-family:'Share Tech Mono',monospace; font-size:11px; letter-spacing:2px; text-transform:uppercase; color:var(--mid); text-decoration:none; transition:color 0.2s; }
+    .nav-links a:hover { color:var(--green); }
 
-    .nav-logo span {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-weight: 900;
-      font-size: 13px;
-      color: var(--black);
-      letter-spacing: -0.5px;
-    }
-
-    .nav-name {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-weight: 700;
-      font-size: 17px;
-      letter-spacing: 2px;
-      color: var(--white);
-      text-transform: uppercase;
-    }
-
-    .nav-links {
-      display: flex;
-      gap: 32px;
-      list-style: none;
-    }
-
-    .nav-links a {
-      font-family: 'Share Tech Mono', monospace;
-      font-size: 11px;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      color: var(--mid);
-      text-decoration: none;
-      transition: color 0.2s;
-    }
-
-    .nav-links a:hover { color: var(--accent); }
-
-    /* ── HERO ── */
+    /* HERO */
     .hero {
-      min-height: 100vh;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      position: relative;
-      overflow: hidden;
+      min-height: 100vh; display: grid; grid-template-columns: 1fr 1fr;
+      position: relative; overflow: hidden; background: var(--green-dark);
     }
-
     .hero-left {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      padding: 120px 5vw 80px 8vw;
-      position: relative;
-      z-index: 2;
+      display: flex; flex-direction: column; justify-content: center;
+      padding: 120px 5vw 80px 8vw; position: relative; z-index: 2;
     }
-
     .hero-tag {
-      font-family: 'Share Tech Mono', monospace;
-      font-size: 11px;
-      letter-spacing: 4px;
-      color: var(--accent);
-      text-transform: uppercase;
-      margin-bottom: 24px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
+      font-family:'Share Tech Mono',monospace; font-size:11px; letter-spacing:4px;
+      color:var(--green-light); text-transform:uppercase; margin-bottom:24px;
+      display:flex; align-items:center; gap:12px;
     }
+    .hero-tag::before { content:''; width:32px; height:1px; background:var(--green-light); }
+    h1 { font-family:'Barlow Condensed',sans-serif; font-weight:900; font-size:clamp(56px,7vw,100px); line-height:0.92; text-transform:uppercase; color:#fff; letter-spacing:-1px; }
+    h1 .accent { color:var(--green-light); }
+    .hero-sub { margin-top:28px; font-size:16px; color:rgba(255,255,255,0.65); max-width:400px; line-height:1.7; }
+    .hero-cta { margin-top:44px; display:flex; gap:16px; flex-wrap:wrap; }
+    .btn { font-family:'Share Tech Mono',monospace; font-size:11px; letter-spacing:2px; text-transform:uppercase; padding:14px 28px; text-decoration:none; border:none; cursor:pointer; transition:all 0.2s; display:inline-block; }
+    .btn-primary { background:var(--green-light); color:var(--green-dark); font-weight:700; }
+    .btn-primary:hover { background:#fff; transform:translateY(-2px); }
+    .btn-outline { background:transparent; color:rgba(255,255,255,0.8); border:1px solid rgba(255,255,255,0.3); }
+    .btn-outline:hover { border-color:var(--green-light); color:var(--green-light); }
 
-    .hero-tag::before {
-      content: '';
-      width: 32px;
-      height: 1px;
-      background: var(--accent);
-    }
-
-    h1 {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-weight: 900;
-      font-size: clamp(56px, 7vw, 100px);
-      line-height: 0.92;
-      text-transform: uppercase;
-      color: var(--white);
-      letter-spacing: -1px;
-    }
-
-    h1 .accent { color: var(--accent); }
-
-    .hero-sub {
-      margin-top: 28px;
-      font-size: 16px;
-      color: var(--mid);
-      max-width: 400px;
-      line-height: 1.7;
-    }
-
-    .hero-cta {
-      margin-top: 44px;
-      display: flex;
-      gap: 16px;
-      flex-wrap: wrap;
-    }
-
-    .btn {
-      font-family: 'Share Tech Mono', monospace;
-      font-size: 11px;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      padding: 14px 28px;
-      text-decoration: none;
-      border: none;
-      cursor: pointer;
-      transition: all 0.2s;
-    }
-
-    .btn-primary {
-      background: var(--accent);
-      color: var(--black);
-    }
-
-    .btn-primary:hover {
-      background: var(--accent2);
-      transform: translateY(-2px);
-    }
-
-    .btn-outline {
-      background: transparent;
-      color: var(--light);
-      border: 1px solid var(--border);
-    }
-
-    .btn-outline:hover {
-      border-color: var(--accent);
-      color: var(--accent);
-    }
-
-    .hero-right {
-      position: relative;
-      overflow: hidden;
-    }
-
+    .hero-right { position:relative; overflow:hidden; }
     .hero-right::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background:
-        linear-gradient(to right, var(--black) 0%, transparent 40%),
-        linear-gradient(135deg, #1a1d22 0%, #0d0f12 100%);
-      z-index: 1;
+      content:''; position:absolute; inset:0;
+      background: linear-gradient(to right,var(--green-dark) 0%,transparent 35%), linear-gradient(135deg,#243f26 0%,#1a2e1c 100%);
+      z-index:1;
     }
-
     .hero-bg {
-      position: absolute;
-      inset: 0;
-      background:
-        repeating-linear-gradient(
-          0deg,
-          transparent,
-          transparent 39px,
-          rgba(200,134,10,0.04) 39px,
-          rgba(200,134,10,0.04) 40px
-        ),
-        repeating-linear-gradient(
-          90deg,
-          transparent,
-          transparent 39px,
-          rgba(200,134,10,0.04) 39px,
-          rgba(200,134,10,0.04) 40px
-        );
-    }
-
-    .hero-gfx {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-30%, -50%);
-      width: 380px;
-      height: 380px;
-      z-index: 2;
-    }
-
-    .gfx-ring {
-      position: absolute;
-      border-radius: 50%;
-      border: 1px solid rgba(200,134,10,0.2);
-      animation: spin 20s linear infinite;
-    }
-
-    .gfx-ring:nth-child(1) { inset: 0; animation-duration: 30s; }
-    .gfx-ring:nth-child(2) { inset: 40px; animation-direction: reverse; animation-duration: 20s; }
-    .gfx-ring:nth-child(3) { inset: 80px; animation-duration: 15s; border-color: rgba(200,134,10,0.35); }
-
-    .gfx-center {
-      position: absolute;
-      inset: 120px;
-      background: var(--panel);
-      border-radius: 50%;
-      border: 2px solid var(--accent);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .gfx-center-text {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-weight: 700;
-      font-size: 11px;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      color: var(--accent);
-      text-align: center;
-      line-height: 1.8;
-    }
-
-    .gfx-dot {
-      position: absolute;
-      width: 8px; height: 8px;
-      background: var(--accent);
-      border-radius: 50%;
-      top: 50%;
-      left: 0;
-      transform: translateY(-50%);
-      transform-origin: 190px 0;
-      animation: orb 8s linear infinite;
-    }
-
-    @keyframes spin { to { transform: rotate(360deg); } }
-    @keyframes orb { to { transform: translateY(-50%) rotate(360deg); } }
-
-    .hero-stats {
-      position: absolute;
-      bottom: 60px;
-      left: 8vw;
-      display: flex;
-      gap: 48px;
-      z-index: 2;
-    }
-
-    .stat-item {}
-
-    .stat-num {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-weight: 700;
-      font-size: 36px;
-      color: var(--accent);
-      line-height: 1;
-    }
-
-    .stat-label {
-      font-family: 'Share Tech Mono', monospace;
-      font-size: 9px;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      color: var(--mid);
-      margin-top: 4px;
-    }
-
-    /* ── SECTION BASE ── */
-    section {
-      padding: 100px 8vw;
-      position: relative;
-    }
-
-    .section-label {
-      font-family: 'Share Tech Mono', monospace;
-      font-size: 10px;
-      letter-spacing: 4px;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 12px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .section-label::after {
-      content: '';
-      flex: 1;
-      max-width: 60px;
-      height: 1px;
-      background: var(--accent);
-    }
-
-    h2 {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-weight: 700;
-      font-size: clamp(36px, 4vw, 56px);
-      text-transform: uppercase;
-      color: var(--white);
-      line-height: 1;
-      letter-spacing: -0.5px;
-    }
-
-    h3 {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-weight: 700;
-      font-size: 22px;
-      text-transform: uppercase;
-      color: var(--white);
-      letter-spacing: 0.5px;
-    }
-
-    /* ── ABOUT ── */
-    #about {
-      background: var(--dark);
-      border-top: 1px solid var(--border);
-    }
-
-    .about-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 80px;
-      margin-top: 56px;
-      align-items: start;
-    }
-
-    .about-text p {
-      color: var(--mid);
-      font-size: 15px;
-      line-height: 1.8;
-      margin-bottom: 16px;
-    }
-
-    .about-text p strong {
-      color: var(--light);
-      font-weight: 500;
-    }
-
-    .usp-list {
-      display: flex;
-      flex-direction: column;
-      gap: 1px;
-      margin-top: 32px;
-    }
-
-    .usp-item {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      padding: 18px 20px;
-      background: var(--panel);
-      border-left: 3px solid var(--accent);
-      transition: background 0.2s;
-    }
-
-    .usp-item:hover { background: #1e2024; }
-
-    .usp-icon {
-      font-size: 20px;
-      width: 32px;
-      text-align: center;
-    }
-
-    .usp-label {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-weight: 700;
-      font-size: 15px;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      color: var(--white);
-    }
-
-    .about-info {
-      display: flex;
-      flex-direction: column;
-      gap: 1px;
-    }
-
-    .info-card {
-      padding: 24px;
-      background: var(--panel);
-      border: 1px solid var(--border);
-    }
-
-    .info-card-label {
-      font-family: 'Share Tech Mono', monospace;
-      font-size: 9px;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 8px;
-    }
-
-    .info-card-value {
-      font-size: 14px;
-      color: var(--light);
-      line-height: 1.6;
-    }
-
-    /* ── SERVICES ── */
-    #services {
-      border-top: 1px solid var(--border);
-    }
-
-    .services-intro {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 60px;
-      margin-top: 56px;
-      margin-bottom: 60px;
-    }
-
-    .service-block {
-      border: 1px solid var(--border);
-      padding: 36px;
-      position: relative;
-      transition: border-color 0.2s, transform 0.2s;
-    }
-
-    .service-block:hover {
-      border-color: var(--accent);
-      transform: translateY(-4px);
-    }
-
-    .service-block::before {
-      content: attr(data-num);
-      font-family: 'Barlow Condensed', sans-serif;
-      font-weight: 900;
-      font-size: 80px;
-      color: var(--border);
-      position: absolute;
-      top: 16px;
-      right: 20px;
-      line-height: 1;
-      pointer-events: none;
-    }
-
-    .service-block h3 { margin-bottom: 20px; }
-
-    .service-list {
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-
-    .service-list li {
-      font-size: 14px;
-      color: var(--mid);
-      display: flex;
-      align-items: baseline;
-      gap: 10px;
-    }
-
-    .service-list li::before {
-      content: '//';
-      font-family: 'Share Tech Mono', monospace;
-      font-size: 10px;
-      color: var(--accent);
-      flex-shrink: 0;
-    }
-
-    /* ── MACHINING FACILITY ── */
-    .machining-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-      gap: 1px;
-      background: var(--border);
-      margin-top: 48px;
-      border: 1px solid var(--border);
-    }
-
-    .machine-item {
-      background: var(--panel);
-      padding: 24px 20px;
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-      transition: background 0.2s;
-      cursor: default;
-    }
-
-    .machine-item:hover { background: #1e2024; }
-
-    .machine-name {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-weight: 700;
-      font-size: 15px;
-      text-transform: uppercase;
-      color: var(--white);
-      letter-spacing: 0.5px;
-    }
-
-    .machine-spec {
-      font-family: 'Share Tech Mono', monospace;
-      font-size: 11px;
-      color: var(--accent);
-    }
-
-    /* ── PRODUCTS ── */
-    #products {
-      background: var(--dark);
-      border-top: 1px solid var(--border);
-    }
-
-    .product-section {
-      margin-top: 64px;
-    }
-
-    .product-section-title {
-      font-family: 'Share Tech Mono', monospace;
-      font-size: 10px;
-      letter-spacing: 4px;
-      text-transform: uppercase;
-      color: var(--green-light);
-      margin-bottom: 24px;
-      padding-bottom: 12px;
-      border-bottom: 1px solid var(--border);
-    }
-
-    .product-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 1px;
-      background: var(--border);
-    }
-
-    .product-card {
-      background: var(--panel);
-      padding: 32px 28px;
-      transition: background 0.2s;
-    }
-
-    .product-card:hover { background: #1e2024; }
-
-    .product-icon {
-      font-size: 28px;
-      margin-bottom: 16px;
-    }
-
-    .product-card h3 { margin-bottom: 12px; font-size: 18px; }
-
-    .product-meta {
-      margin-top: 16px;
-      padding-top: 16px;
-      border-top: 1px solid var(--border);
-      font-size: 12px;
-      color: var(--mid);
-      line-height: 1.6;
-    }
-
-    .product-meta strong { color: var(--accent); }
-
-    .sub-items {
-      margin-top: 12px;
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-    }
-
-    .sub-items span {
-      font-size: 13px;
-      color: var(--mid);
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .sub-items span::before {
-      content: '▸';
-      color: var(--accent);
-      font-size: 9px;
-    }
-
-    /* die sets grid */
-    .die-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1px;
-      background: var(--border);
-      margin-top: 24px;
-    }
-
-    .die-card {
-      background: var(--panel);
-      padding: 24px;
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      transition: background 0.2s;
-    }
-
-    .die-card:hover { background: #1e2024; }
-
-    .die-icon {
-      width: 48px; height: 48px;
-      background: var(--steel);
-      border-radius: 4px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 22px;
-      flex-shrink: 0;
-    }
-
-    .die-label {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-weight: 700;
-      font-size: 16px;
-      text-transform: uppercase;
-      color: var(--white);
-    }
-
-    .die-sub {
-      font-size: 12px;
-      color: var(--mid);
-      margin-top: 2px;
-    }
-
-    .die-specs {
-      margin-top: 24px;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1px;
-      background: var(--border);
-    }
-
-    .die-spec-item {
-      background: var(--panel);
-      padding: 20px;
-    }
-
-    .die-spec-key {
-      font-family: 'Share Tech Mono', monospace;
-      font-size: 9px;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 6px;
-    }
-
-    .die-spec-val {
-      font-size: 13px;
-      color: var(--light);
-      line-height: 1.5;
-    }
-
-    /* ── PARTNER ── */
-    #partner {
-      border-top: 1px solid var(--border);
-      background:
-        linear-gradient(135deg, rgba(45,106,79,0.08) 0%, transparent 60%),
-        var(--black);
-    }
-
-    .partner-inner {
-      display: grid;
-      grid-template-columns: 1fr 1.2fr;
-      gap: 80px;
-      margin-top: 56px;
-      align-items: start;
-    }
-
-    .partner-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      background: rgba(45,106,79,0.15);
-      border: 1px solid var(--green-light);
-      padding: 8px 16px;
-      margin-bottom: 24px;
-    }
-
-    .partner-badge span {
-      font-family: 'Share Tech Mono', monospace;
-      font-size: 10px;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      color: var(--green-light);
-    }
-
-    .partner-name {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-weight: 900;
-      font-size: 48px;
-      text-transform: uppercase;
-      color: var(--white);
-      line-height: 1;
-      margin-bottom: 20px;
-    }
-
-    .partner-name em {
-      color: var(--green-light);
-      font-style: normal;
-    }
-
-    .partner-desc {
-      font-size: 15px;
-      color: var(--mid);
-      line-height: 1.8;
-    }
-
-    .materials-grid {
-      display: flex;
-      flex-direction: column;
-      gap: 1px;
-    }
-
-    .material-row {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      padding: 18px 20px;
-      background: var(--panel);
-      border-left: 3px solid var(--green);
-      transition: background 0.2s;
-    }
-
-    .material-row:hover {
-      background: #1a1f1c;
-      border-left-color: var(--green-light);
-    }
-
-    .material-name {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-weight: 700;
-      font-size: 15px;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      color: var(--white);
-    }
-
-    /* ── CONTACT ── */
-    #contact {
-      background: var(--panel);
-      border-top: 1px solid var(--border);
-    }
-
-    .contact-grid {
-      display: grid;
-      grid-template-columns: 1.2fr 1fr;
-      gap: 80px;
-      margin-top: 56px;
-    }
-
-    .contact-item {
-      display: flex;
-      gap: 20px;
-      align-items: flex-start;
-      padding: 24px 0;
-      border-bottom: 1px solid var(--border);
-    }
-
-    .contact-item:first-child { border-top: 1px solid var(--border); }
-
-    .contact-ico {
-      width: 44px; height: 44px;
-      background: rgba(200,134,10,0.1);
-      border: 1px solid rgba(200,134,10,0.3);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 18px;
-      flex-shrink: 0;
-    }
-
-    .contact-key {
-      font-family: 'Share Tech Mono', monospace;
-      font-size: 9px;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 6px;
-    }
-
-    .contact-val {
-      font-size: 15px;
-      color: var(--light);
-      line-height: 1.6;
-    }
-
-    .contact-val a {
-      color: var(--light);
-      text-decoration: none;
-    }
-
-    .contact-val a:hover { color: var(--accent); }
-
-    .reg-info {
-      display: flex;
-      flex-direction: column;
-      gap: 1px;
-    }
-
-    .reg-row {
-      padding: 20px 24px;
-      background: var(--black);
-      border: 1px solid var(--border);
-    }
-
-    .reg-key {
-      font-family: 'Share Tech Mono', monospace;
-      font-size: 9px;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      color: var(--mid);
-      margin-bottom: 6px;
-    }
-
-    .reg-val {
-      font-family: 'Share Tech Mono', monospace;
-      font-size: 13px;
-      color: var(--accent);
-    }
-
-    /* ── FOOTER ── */
-    footer {
-      padding: 32px 8vw;
-      background: var(--black);
-      border-top: 1px solid var(--border);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .footer-brand {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-weight: 700;
-      font-size: 14px;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      color: var(--mid);
-    }
-
-    .footer-copy {
-      font-family: 'Share Tech Mono', monospace;
-      font-size: 9px;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      color: var(--steel);
-    }
-
-    /* ── SCROLL FADE-IN ── */
-    .fade-up {
-      opacity: 0;
-      transform: translateY(32px);
-      transition: opacity 0.6s ease, transform 0.6s ease;
-    }
-
-    .fade-up.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    /* ── RESPONSIVE ── */
-    @media (max-width: 900px) {
-      .hero { grid-template-columns: 1fr; }
-      .hero-right { display: none; }
-      .about-grid, .services-intro, .partner-inner, .contact-grid {
-        grid-template-columns: 1fr;
-        gap: 40px;
-      }
-      nav .nav-links { display: none; }
-      .die-grid { grid-template-columns: 1fr; }
+      position:absolute; inset:0;
+      background: repeating-linear-gradient(0deg,transparent,transparent 39px,rgba(90,158,94,0.06) 39px,rgba(90,158,94,0.06) 40px),
+                  repeating-linear-gradient(90deg,transparent,transparent 39px,rgba(90,158,94,0.06) 39px,rgba(90,158,94,0.06) 40px);
+    }
+    .hero-gfx { position:absolute; top:50%; left:50%; transform:translate(-30%,-50%); width:380px; height:380px; z-index:2; }
+    .gfx-ring { position:absolute; border-radius:50%; border:1px solid rgba(90,158,94,0.25); animation:spin 20s linear infinite; }
+    .gfx-ring:nth-child(1) { inset:0; animation-duration:30s; }
+    .gfx-ring:nth-child(2) { inset:40px; animation-direction:reverse; animation-duration:20s; }
+    .gfx-ring:nth-child(3) { inset:80px; animation-duration:15s; border-color:rgba(90,158,94,0.45); }
+    .gfx-center { position:absolute; inset:120px; background:rgba(30,62,32,0.9); border-radius:50%; border:2px solid var(--green-light); display:flex; align-items:center; justify-content:center; }
+    .gfx-center-text { font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:11px; letter-spacing:3px; text-transform:uppercase; color:var(--green-light); text-align:center; line-height:1.8; }
+    .gfx-dot { position:absolute; width:8px; height:8px; background:var(--green-light); border-radius:50%; top:50%; left:0; transform:translateY(-50%); transform-origin:190px 0; animation:orb 8s linear infinite; }
+    @keyframes spin { to { transform:rotate(360deg); } }
+    @keyframes orb  { to { transform:translateY(-50%) rotate(360deg); } }
+
+    .hero-stats { position:absolute; bottom:60px; left:8vw; display:flex; gap:48px; z-index:2; }
+    .stat-num { font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:36px; color:var(--green-light); line-height:1; }
+    .stat-label { font-family:'Share Tech Mono',monospace; font-size:9px; letter-spacing:2px; text-transform:uppercase; color:rgba(255,255,255,0.45); margin-top:4px; }
+
+    /* SECTIONS */
+    section { padding:100px 8vw; position:relative; }
+    .section-label { font-family:'Share Tech Mono',monospace; font-size:10px; letter-spacing:4px; text-transform:uppercase; color:var(--green); margin-bottom:12px; display:flex; align-items:center; gap:10px; }
+    .section-label::after { content:''; flex:1; max-width:60px; height:1px; background:var(--green); }
+    h2 { font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:clamp(36px,4vw,56px); text-transform:uppercase; color:var(--dark); line-height:1; letter-spacing:-0.5px; }
+    h3 { font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:22px; text-transform:uppercase; color:var(--dark); letter-spacing:0.5px; }
+
+    /* ABOUT */
+    #about { background:var(--off-white); border-top:3px solid var(--green); }
+    .about-grid { display:grid; grid-template-columns:1fr 1fr; gap:80px; margin-top:56px; align-items:start; }
+    .about-text p { color:var(--dark-mid); font-size:15px; line-height:1.8; margin-bottom:16px; }
+    .about-text p strong { color:var(--dark); font-weight:500; }
+    .usp-list { display:flex; flex-direction:column; gap:1px; margin-top:32px; }
+    .usp-item { display:flex; align-items:center; gap:16px; padding:16px 20px; background:var(--white); border-left:3px solid var(--green); transition:background 0.2s; }
+    .usp-item:hover { background:var(--green-tint); }
+    .usp-icon { font-size:18px; width:28px; text-align:center; }
+    .usp-label { font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:15px; text-transform:uppercase; letter-spacing:1px; color:var(--dark); }
+    .about-info { display:flex; flex-direction:column; gap:1px; }
+    .info-card { padding:22px 24px; background:var(--white); border:1px solid var(--border); }
+    .info-card-label { font-family:'Share Tech Mono',monospace; font-size:9px; letter-spacing:3px; text-transform:uppercase; color:var(--green); margin-bottom:6px; }
+    .info-card-value { font-size:14px; color:var(--dark); line-height:1.6; }
+
+    /* SERVICES */
+    #services { background:var(--white); border-top:1px solid var(--border); }
+    .services-intro { display:grid; grid-template-columns:1fr 1fr; gap:40px; margin-top:56px; margin-bottom:60px; }
+    .service-block { border:1px solid var(--border); padding:36px; position:relative; transition:border-color 0.2s,transform 0.2s,box-shadow 0.2s; background:var(--panel); }
+    .service-block:hover { border-color:var(--green); transform:translateY(-4px); box-shadow:0 8px 24px rgba(45,90,47,0.1); }
+    .service-block::before { content:attr(data-num); font-family:'Barlow Condensed',sans-serif; font-weight:900; font-size:80px; color:var(--light-gray); position:absolute; top:16px; right:20px; line-height:1; pointer-events:none; }
+    .service-block h3 { margin-bottom:20px; }
+    .service-list { list-style:none; display:flex; flex-direction:column; gap:8px; }
+    .service-list li { font-size:14px; color:var(--dark-mid); display:flex; align-items:baseline; gap:10px; }
+    .service-list li::before { content:'//'; font-family:'Share Tech Mono',monospace; font-size:10px; color:var(--green); flex-shrink:0; }
+
+    .machining-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(240px,1fr)); gap:1px; background:var(--border); margin-top:48px; border:1px solid var(--border); }
+    .machine-item { background:var(--white); padding:22px 20px; display:flex; flex-direction:column; gap:6px; transition:background 0.2s; }
+    .machine-item:hover { background:var(--green-tint); }
+    .machine-name { font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:15px; text-transform:uppercase; color:var(--dark); letter-spacing:0.5px; }
+    .machine-spec { font-family:'Share Tech Mono',monospace; font-size:11px; color:var(--green); }
+
+    /* PRODUCTS */
+    #products { background:var(--off-white); border-top:1px solid var(--border); }
+    .product-section { margin-top:64px; }
+    .product-section-title { font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:14px; letter-spacing:3px; text-transform:uppercase; color:#fff; background:var(--green); padding:10px 36px 10px 18px; margin-bottom:24px; display:inline-block; clip-path:polygon(0 0,100% 0,96% 100%,0 100%); }
+    .product-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:1px; background:var(--border); }
+    .product-card { background:var(--white); padding:30px 26px; transition:background 0.2s; }
+    .product-card:hover { background:var(--green-tint); }
+    .product-icon { font-size:26px; margin-bottom:14px; }
+    .product-card h3 { margin-bottom:12px; font-size:18px; color:var(--dark); }
+    .product-meta { margin-top:16px; padding-top:14px; border-top:1px solid var(--border); font-size:12px; color:var(--mid); line-height:1.7; }
+    .product-meta strong { color:var(--green); }
+    .sub-items { margin-top:12px; display:flex; flex-direction:column; gap:6px; }
+    .sub-items span { font-size:13px; color:var(--dark-mid); display:flex; align-items:center; gap:8px; }
+    .sub-items span::before { content:'▸'; color:var(--green); font-size:9px; }
+
+    .die-grid { display:grid; grid-template-columns:1fr 1fr; gap:1px; background:var(--border); margin-top:24px; }
+    .die-card { background:var(--white); padding:22px; display:flex; align-items:center; gap:16px; transition:background 0.2s; }
+    .die-card:hover { background:var(--green-tint); }
+    .die-icon { width:46px; height:46px; background:var(--green-pale); border:1px solid rgba(45,90,47,0.2); border-radius:4px; display:flex; align-items:center; justify-content:center; font-size:20px; flex-shrink:0; }
+    .die-label { font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:16px; text-transform:uppercase; color:var(--dark); }
+    .die-sub { font-size:12px; color:var(--mid); margin-top:2px; }
+    .die-specs { margin-top:1px; display:grid; grid-template-columns:1fr 1fr; gap:1px; background:var(--border); }
+    .die-spec-item { background:var(--panel); padding:18px 20px; }
+    .die-spec-key { font-family:'Share Tech Mono',monospace; font-size:9px; letter-spacing:2px; text-transform:uppercase; color:var(--green); margin-bottom:5px; }
+    .die-spec-val { font-size:13px; color:var(--dark); line-height:1.5; }
+
+    /* PARTNER */
+    #partner { background:var(--white); border-top:3px solid var(--green); }
+    .partner-inner { display:grid; grid-template-columns:1fr 1.2fr; gap:80px; margin-top:56px; align-items:start; }
+    .partner-badge { display:inline-flex; align-items:center; gap:10px; background:var(--green-pale); border:1px solid var(--green-light); padding:8px 16px; margin-bottom:24px; }
+    .partner-badge span { font-family:'Share Tech Mono',monospace; font-size:10px; letter-spacing:2px; text-transform:uppercase; color:var(--green); }
+    .partner-name { font-family:'Barlow Condensed',sans-serif; font-weight:900; font-size:52px; text-transform:uppercase; color:var(--dark); line-height:1; margin-bottom:20px; }
+    .partner-name em { color:var(--green); font-style:normal; }
+    .partner-desc { font-size:15px; color:var(--dark-mid); line-height:1.8; }
+    .materials-grid { display:flex; flex-direction:column; gap:1px; }
+    .material-row { display:flex; align-items:center; gap:16px; padding:16px 20px; background:var(--off-white); border-left:3px solid var(--green); transition:background 0.2s; }
+    .material-row:hover { background:var(--green-pale); border-left-color:var(--green-dark); }
+    .material-name { font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:15px; text-transform:uppercase; letter-spacing:1px; color:var(--dark); }
+
+    /* CONTACT */
+    #contact { background:var(--green-dark); border-top:1px solid var(--border); }
+    #contact .section-label { color:var(--green-light); }
+    #contact .section-label::after { background:var(--green-light); }
+    #contact h2 { color:#fff; }
+    .contact-grid { display:grid; grid-template-columns:1.2fr 1fr; gap:80px; margin-top:56px; }
+    .contact-item { display:flex; gap:20px; align-items:flex-start; padding:24px 0; border-bottom:1px solid rgba(255,255,255,0.12); }
+    .contact-item:first-child { border-top:1px solid rgba(255,255,255,0.12); }
+    .contact-ico { width:44px; height:44px; background:rgba(90,158,94,0.18); border:1px solid rgba(90,158,94,0.4); display:flex; align-items:center; justify-content:center; font-size:18px; flex-shrink:0; }
+    .contact-key { font-family:'Share Tech Mono',monospace; font-size:9px; letter-spacing:3px; text-transform:uppercase; color:var(--green-light); margin-bottom:6px; }
+    .contact-val { font-size:15px; color:rgba(255,255,255,0.85); line-height:1.6; }
+    .contact-val a { color:rgba(255,255,255,0.85); text-decoration:none; }
+    .contact-val a:hover { color:var(--green-light); }
+    .reg-info { display:flex; flex-direction:column; gap:1px; }
+    .reg-row { padding:20px 24px; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.12); }
+    .reg-key { font-family:'Share Tech Mono',monospace; font-size:9px; letter-spacing:3px; text-transform:uppercase; color:rgba(255,255,255,0.4); margin-bottom:6px; }
+    .reg-val { font-family:'Share Tech Mono',monospace; font-size:13px; color:var(--green-light); }
+
+    /* FOOTER */
+    footer { padding:30px 8vw; background:var(--green-dark); border-top:1px solid rgba(255,255,255,0.1); display:flex; justify-content:space-between; align-items:center; }
+    .footer-brand { font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:14px; letter-spacing:2px; text-transform:uppercase; color:rgba(255,255,255,0.5); }
+    .footer-copy { font-family:'Share Tech Mono',monospace; font-size:9px; letter-spacing:2px; text-transform:uppercase; color:rgba(255,255,255,0.3); }
+
+    /* ANIMATIONS */
+    .fade-up { opacity:0; transform:translateY(28px); transition:opacity 0.6s ease,transform 0.6s ease; }
+    .fade-up.visible { opacity:1; transform:translateY(0); }
+
+    /* RESPONSIVE */
+    @media (max-width:900px) {
+      .hero { grid-template-columns:1fr; }
+      .hero-right { display:none; }
+      .about-grid,.services-intro,.partner-inner,.contact-grid { grid-template-columns:1fr; gap:40px; }
+      nav .nav-links { display:none; }
+      .die-grid,.die-specs { grid-template-columns:1fr; }
     }
   </style>
 </head>
 <body>
 
-  <!-- NAV -->
   <nav>
     <a class="nav-brand" href="#">
       <div class="nav-logo"><span>IE</span></div>
@@ -944,17 +241,11 @@
     </ul>
   </nav>
 
-  <!-- HERO -->
   <div class="hero">
     <div class="hero-left">
       <div class="hero-tag">Tool Room Engineering</div>
-      <h1>
-        INDKAB<br />
-        <span class="accent">ENGINEERING</span>
-      </h1>
-      <p class="hero-sub">
-        Complete package of solutions for all Tool Room needs — from Raw Material to finished product. Quality, timely delivery &amp; cost effectiveness, guaranteed.
-      </p>
+      <h1>INDKAB<br /><span class="accent">ENGINEERING</span></h1>
+      <p class="hero-sub">Complete package of solutions for all Tool Room needs — from Raw Material to finished product. Quality, timely delivery &amp; cost effectiveness, guaranteed.</p>
       <div class="hero-cta">
         <a href="#services" class="btn btn-primary">Our Services</a>
         <a href="#contact" class="btn btn-outline">Get in Touch</a>
@@ -963,46 +254,26 @@
     <div class="hero-right">
       <div class="hero-bg"></div>
       <div class="hero-gfx">
-        <div class="gfx-ring"></div>
-        <div class="gfx-ring"></div>
-        <div class="gfx-ring"></div>
+        <div class="gfx-ring"></div><div class="gfx-ring"></div><div class="gfx-ring"></div>
         <div class="gfx-dot"></div>
-        <div class="gfx-center">
-          <div class="gfx-center-text">PRECISION<br />TOOLING<br />SOLUTIONS</div>
-        </div>
+        <div class="gfx-center"><div class="gfx-center-text">PRECISION<br />TOOLING<br />SOLUTIONS</div></div>
       </div>
     </div>
     <div class="hero-stats">
-      <div class="stat-item">
-        <div class="stat-num">8+</div>
-        <div class="stat-label">Machines</div>
-      </div>
-      <div class="stat-item">
-        <div class="stat-num">MSME</div>
-        <div class="stat-label">Registered</div>
-      </div>
-      <div class="stat-item">
-        <div class="stat-num">50+</div>
-        <div class="stat-label">Min. Batch Qty</div>
-      </div>
+      <div class="stat-item"><div class="stat-num">8+</div><div class="stat-label">Machines</div></div>
+      <div class="stat-item"><div class="stat-num">MSME</div><div class="stat-label">Registered</div></div>
+      <div class="stat-item"><div class="stat-num">50+</div><div class="stat-label">Min. Batch Qty</div></div>
     </div>
   </div>
 
-  <!-- ABOUT -->
   <section id="about">
     <div class="section-label">Who We Are</div>
     <h2>End-to-End<br />Tool Room Solutions</h2>
     <div class="about-grid fade-up">
       <div class="about-text">
-        <p>
-          At <strong>Indkab Engineering</strong>, we offer the best package of solutions for all Tool Room needs — from Raw Material procurement to the finished product.
-        </p>
-        <p>
-          Our engineering works stand on three core pillars: <strong>Quality</strong>, <strong>Timely Delivery</strong>, and <strong>Cost Effectiveness</strong>. These are not just promises — they are the USPs we have built our reputation on.
-        </p>
-        <p>
-          Through our associate partnership with <strong>Noble Steels</strong>, we provide a wide range of Raw Materials covering Tool &amp; Alloy Steels, giving our clients a single-window solution.
-        </p>
+        <p>At <strong>Indkab Engineering</strong>, we offer the best package of solutions for all Tool Room needs — from Raw Material procurement to the finished product.</p>
+        <p>Our engineering works stand on three core pillars: <strong>Quality</strong>, <strong>Timely Delivery</strong>, and <strong>Cost Effectiveness</strong>. These are not just promises — they are the USPs we have built our reputation on.</p>
+        <p>Through our associate partnership with <strong>Noble Steels</strong>, we provide a wide range of Raw Materials covering Tool &amp; Alloy Steels, giving our clients a single-window solution.</p>
         <div class="usp-list">
           <div class="usp-item"><span class="usp-icon">⚙️</span><span class="usp-label">Quality Assured</span></div>
           <div class="usp-item"><span class="usp-icon">⏱️</span><span class="usp-label">Timely Delivery</span></div>
@@ -1011,31 +282,15 @@
         </div>
       </div>
       <div class="about-info">
-        <div class="info-card">
-          <div class="info-card-label">Company</div>
-          <div class="info-card-value">Indkab Engineering</div>
-        </div>
-        <div class="info-card">
-          <div class="info-card-label">GST Number</div>
-          <div class="info-card-value">27AADFI4354A1ZS</div>
-        </div>
-        <div class="info-card">
-          <div class="info-card-label">MSME Registration</div>
-          <div class="info-card-value">UDYAM-MH-04-0201426</div>
-        </div>
-        <div class="info-card">
-          <div class="info-card-label">Location</div>
-          <div class="info-card-value">Plot No. D 52/22, Near Kamgar Chowk<br />Waluj MIDC, Chh. Sambhajinagar – 431133</div>
-        </div>
-        <div class="info-card">
-          <div class="info-card-label">Associate Partner</div>
-          <div class="info-card-value">Noble Steels — Tool &amp; Alloy Steel Supplier</div>
-        </div>
+        <div class="info-card"><div class="info-card-label">Company</div><div class="info-card-value">Indkab Engineering</div></div>
+        <div class="info-card"><div class="info-card-label">GST Number</div><div class="info-card-value">27AADFI4354A1ZS</div></div>
+        <div class="info-card"><div class="info-card-label">MSME Registration</div><div class="info-card-value">UDYAM-MH-04-0201426</div></div>
+        <div class="info-card"><div class="info-card-label">Location</div><div class="info-card-value">Plot No. D 52/22, Near Kamgar Chowk<br />Waluj MIDC, Chh. Sambhajinagar – 431133</div></div>
+        <div class="info-card"><div class="info-card-label">Associate Partner</div><div class="info-card-value">Noble Steels — Tool &amp; Alloy Steel Supplier</div></div>
       </div>
     </div>
   </section>
 
-  <!-- SERVICES -->
   <section id="services">
     <div class="section-label">What We Do</div>
     <h2>Services &amp;<br />Capabilities</h2>
@@ -1064,202 +319,87 @@
         </ul>
       </div>
     </div>
-
-    <div class="section-label" style="margin-top: 60px;">Machining Facility</div>
+    <div class="section-label" style="margin-top:60px;">Machining Facility</div>
     <h2>Our Machines</h2>
     <div class="machining-grid fade-up">
-      <div class="machine-item">
-        <div class="machine-name">Vertical Machining Centre</div>
-        <div class="machine-spec">800 × 500 MM</div>
-      </div>
-      <div class="machine-item">
-        <div class="machine-name">Universal Milling Machine</div>
-        <div class="machine-spec">1200 × 600 MM</div>
-      </div>
-      <div class="machine-item">
-        <div class="machine-name">Conventional Milling Machine</div>
-        <div class="machine-spec">600 × 300 MM</div>
-      </div>
-      <div class="machine-item">
-        <div class="machine-name">Surface Grinding Machine</div>
-        <div class="machine-spec">600 × 1000 MM</div>
-      </div>
-      <div class="machine-item">
-        <div class="machine-name">Cylindrical Grinding M/c</div>
-        <div class="machine-spec">Available</div>
-      </div>
-      <div class="machine-item">
-        <div class="machine-name">Lathe Machine</div>
-        <div class="machine-spec">410 MM OD Max</div>
-      </div>
-      <div class="machine-item">
-        <div class="machine-name">DRO Machine</div>
-        <div class="machine-spec">300 × 800 MM</div>
-      </div>
-      <div class="machine-item">
-        <div class="machine-name">CNC Machine</div>
-        <div class="machine-spec">165 × 300 B/w Center</div>
-      </div>
+      <div class="machine-item"><div class="machine-name">Vertical Machining Centre</div><div class="machine-spec">800 × 500 MM</div></div>
+      <div class="machine-item"><div class="machine-name">Universal Milling Machine</div><div class="machine-spec">1200 × 600 MM</div></div>
+      <div class="machine-item"><div class="machine-name">Conventional Milling Machine</div><div class="machine-spec">600 × 300 MM</div></div>
+      <div class="machine-item"><div class="machine-name">Surface Grinding Machine</div><div class="machine-spec">600 × 1000 MM</div></div>
+      <div class="machine-item"><div class="machine-name">Cylindrical Grinding M/c</div><div class="machine-spec">Available</div></div>
+      <div class="machine-item"><div class="machine-name">Lathe Machine</div><div class="machine-spec">410 MM OD Max</div></div>
+      <div class="machine-item"><div class="machine-name">DRO Machine</div><div class="machine-spec">300 × 800 MM</div></div>
+      <div class="machine-item"><div class="machine-name">CNC Machine</div><div class="machine-spec">165 × 300 B/w Center</div></div>
     </div>
   </section>
 
-  <!-- PRODUCTS -->
   <section id="products">
     <div class="section-label">What We Make</div>
     <h2>Product<br />Portfolio</h2>
 
-    <!-- Clamping Elements -->
     <div class="product-section fade-up">
-      <div class="product-section-title">// Clamping Elements</div>
+      <div class="product-section-title">Clamping Elements</div>
       <div class="product-grid">
         <div class="product-card">
           <div class="product-icon">🔧</div>
           <h3>Clamping Screw Jack</h3>
-          <div class="sub-items">
-            <span>Standard &amp; Custom Sizes</span>
-          </div>
-          <div class="product-meta">
-            <strong>Material:</strong> En 8d<br />
-            <strong>Hardness:</strong> 28–30 HRc<br />
-            <strong>Finish:</strong> Blackodized
-          </div>
+          <div class="sub-items"><span>Standard &amp; Custom Sizes</span></div>
+          <div class="product-meta"><strong>Material:</strong> En 8d &nbsp;|&nbsp; <strong>Hardness:</strong> 28–30 HRc &nbsp;|&nbsp; <strong>Finish:</strong> Blackodized</div>
         </div>
         <div class="product-card">
           <div class="product-icon">🪛</div>
           <h3>Strap Clamps</h3>
-          <div class="sub-items">
-            <span>Standard &amp; Custom Sizes</span>
-          </div>
-          <div class="product-meta">
-            <strong>Material:</strong> En 8d<br />
-            <strong>Hardness:</strong> 28–30 HRc<br />
-            <strong>Finish:</strong> Blackodized
-          </div>
+          <div class="sub-items"><span>Standard &amp; Custom Sizes</span></div>
+          <div class="product-meta"><strong>Material:</strong> En 8d &nbsp;|&nbsp; <strong>Hardness:</strong> 28–30 HRc &nbsp;|&nbsp; <strong>Finish:</strong> Blackodized</div>
         </div>
         <div class="product-card">
           <div class="product-icon">⚙️</div>
           <h3>BIS Clamping Elements</h3>
           <div class="sub-items">
-            <span>T Bolt</span>
-            <span>Stud / Flange Nut</span>
-            <span>Hex Nut / Strap Clamp</span>
-            <span>T-Nut / Extension Nut</span>
-            <span>Washer / C-Washer</span>
+            <span>T Bolt</span><span>Stud / Flange Nut</span><span>Hex Nut / Strap Clamp</span><span>T-Nut / Extension Nut</span><span>Washer / C-Washer</span>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- Die Sets -->
     <div class="product-section fade-up">
-      <div class="product-section-title">// Die Sets</div>
+      <div class="product-section-title">Die Sets</div>
       <div class="die-grid">
-        <div class="die-card">
-          <div class="die-icon">🏗️</div>
-          <div>
-            <div class="die-label">Center Pillar</div>
-            <div class="die-sub">Standard configuration</div>
-          </div>
-        </div>
-        <div class="die-card">
-          <div class="die-icon">🏗️</div>
-          <div>
-            <div class="die-label">Rear Pillar</div>
-            <div class="die-sub">Standard configuration</div>
-          </div>
-        </div>
-        <div class="die-card">
-          <div class="die-icon">🏗️</div>
-          <div>
-            <div class="die-label">Diagonal Pillar</div>
-            <div class="die-sub">Standard configuration</div>
-          </div>
-        </div>
-        <div class="die-card">
-          <div class="die-icon">🏗️</div>
-          <div>
-            <div class="die-label">Four Pillar</div>
-            <div class="die-sub">Standard configuration</div>
-          </div>
-        </div>
+        <div class="die-card"><div class="die-icon">🏗️</div><div><div class="die-label">Center Pillar</div><div class="die-sub">Standard configuration</div></div></div>
+        <div class="die-card"><div class="die-icon">🏗️</div><div><div class="die-label">Rear Pillar</div><div class="die-sub">Standard configuration</div></div></div>
+        <div class="die-card"><div class="die-icon">🏗️</div><div><div class="die-label">Diagonal Pillar</div><div class="die-sub">Standard configuration</div></div></div>
+        <div class="die-card"><div class="die-icon">🏗️</div><div><div class="die-label">Four Pillar</div><div class="die-sub">Standard configuration</div></div></div>
       </div>
       <div class="die-specs">
-        <div class="die-spec-item">
-          <div class="die-spec-key">Plate Material</div>
-          <div class="die-spec-val">Mild Steel</div>
-        </div>
-        <div class="die-spec-item">
-          <div class="die-spec-key">Pillar / Bush Material</div>
-          <div class="die-spec-val">EN 353</div>
-        </div>
-        <div class="die-spec-item">
-          <div class="die-spec-key">Ball Cage Material</div>
-          <div class="die-spec-val">Brass / Aluminium</div>
-        </div>
-        <div class="die-spec-item">
-          <div class="die-spec-key">Pillar / Bush Hardness</div>
-          <div class="die-spec-val">55–58 HRc (Hardened)</div>
-        </div>
+        <div class="die-spec-item"><div class="die-spec-key">Plate Material</div><div class="die-spec-val">Mild Steel</div></div>
+        <div class="die-spec-item"><div class="die-spec-key">Pillar / Bush Material</div><div class="die-spec-val">EN 353</div></div>
+        <div class="die-spec-item"><div class="die-spec-key">Ball Cage Material</div><div class="die-spec-val">Brass / Aluminium</div></div>
+        <div class="die-spec-item"><div class="die-spec-key">Pillar / Bush Hardness</div><div class="die-spec-val">55–58 HRc (Hardened)</div></div>
       </div>
     </div>
 
-    <!-- CNC Turned -->
     <div class="product-section fade-up">
-      <div class="product-section-title">// CNC Turned Components</div>
+      <div class="product-section-title">CNC Turned Components</div>
       <div class="product-grid">
-        <div class="product-card">
-          <div class="product-icon">📍</div>
-          <h3>Punch Pins</h3>
-          <div class="sub-items">
-            <span>Standard sizes available</span>
-            <span>Custom batch qty (min 50 nos)</span>
-          </div>
-        </div>
-        <div class="product-card">
-          <div class="product-icon">📌</div>
-          <h3>Guide Pins</h3>
-          <div class="sub-items">
-            <span>Standard sizes available</span>
-            <span>Custom batch qty (min 50 nos)</span>
-          </div>
-        </div>
-        <div class="product-card">
-          <div class="product-icon">🔩</div>
-          <h3>Sleeves &amp; Entry Stoppers</h3>
-          <div class="sub-items">
-            <span>Standard sizes available</span>
-            <span>Custom batch qty (min 50 nos)</span>
-          </div>
-        </div>
-        <div class="product-card">
-          <div class="product-icon">🔄</div>
-          <h3>Stainers &amp; Shafts</h3>
-          <div class="sub-items">
-            <span>Bar route turning</span>
-            <span>Hot / Cold forged</span>
-            <span>Casting components</span>
-          </div>
-        </div>
+        <div class="product-card"><div class="product-icon">📍</div><h3>Punch Pins</h3><div class="sub-items"><span>Standard sizes available</span><span>Custom batch qty (min 50 nos)</span></div></div>
+        <div class="product-card"><div class="product-icon">📌</div><h3>Guide Pins</h3><div class="sub-items"><span>Standard sizes available</span><span>Custom batch qty (min 50 nos)</span></div></div>
+        <div class="product-card"><div class="product-icon">🔩</div><h3>Sleeves &amp; Entry Stoppers</h3><div class="sub-items"><span>Standard sizes available</span><span>Custom batch qty (min 50 nos)</span></div></div>
+        <div class="product-card"><div class="product-icon">🔄</div><h3>Stainers &amp; Shafts</h3><div class="sub-items"><span>Bar route turning</span><span>Hot / Cold forged</span><span>Casting components</span></div></div>
       </div>
     </div>
   </section>
 
-  <!-- PARTNER -->
   <section id="partner">
     <div class="section-label">Associate Partner</div>
     <h2>Noble Steels</h2>
     <div class="partner-inner fade-up">
       <div>
-        <div class="partner-badge">
-          <span>✦ Associate Partner</span>
-        </div>
+        <div class="partner-badge"><span>✦ Associate Partner</span></div>
         <div class="partner-name"><em>Noble</em><br />Steels</div>
-        <p class="partner-desc">
-          A renowned organization serving for over <strong style="color:var(--green-light)">22 years</strong> with a wide range of Tool &amp; Alloy Steels. Noble Steels serves products with Accurate Profile Cutting, giving a cutting edge in the raw material sector. Together, we offer our clients a seamless single-source supply chain.
-        </p>
+        <p class="partner-desc">A renowned organization serving for over <strong style="color:var(--green)">22 years</strong> with a wide range of Tool &amp; Alloy Steels. Noble Steels serves products with Accurate Profile Cutting, giving a cutting edge in the raw material sector. Together, we offer our clients a seamless single-source supply chain.</p>
       </div>
       <div>
-        <div class="product-section-title" style="margin-bottom:16px;">// Material Scope</div>
+        <div class="product-section-title" style="margin-bottom:20px;">Material Scope</div>
         <div class="materials-grid">
           <div class="material-row"><span class="material-name">MS and C 45 Plates</span></div>
           <div class="material-row"><span class="material-name">MS Bright Bars</span></div>
@@ -1273,7 +413,6 @@
     </div>
   </section>
 
-  <!-- CONTACT -->
   <section id="contact">
     <div class="section-label">Reach Us</div>
     <h2>Trade Enquiry</h2>
@@ -1281,72 +420,38 @@
       <div>
         <div class="contact-item">
           <div class="contact-ico">📍</div>
-          <div>
-            <div class="contact-key">Address</div>
-            <div class="contact-val">
-              Plot No. D 52/22, Near Kamgar Chowk<br />
-              Waluj MIDC, Chh. Sambhajinagar – 431133
-            </div>
-          </div>
+          <div><div class="contact-key">Address</div><div class="contact-val">Plot No. D 52/22, Near Kamgar Chowk<br />Waluj MIDC, Chh. Sambhajinagar – 431133</div></div>
         </div>
         <div class="contact-item">
           <div class="contact-ico">📞</div>
-          <div>
-            <div class="contact-key">Phone</div>
-            <div class="contact-val">
-              <a href="tel:9822842482">+91 98228 42482</a><br />
-              <a href="tel:8624083393">+91 86240 83393</a>
-            </div>
-          </div>
+          <div><div class="contact-key">Phone</div><div class="contact-val"><a href="tel:9822842482">+91 98228 42482</a><br /><a href="tel:8624083393">+91 86240 83393</a></div></div>
         </div>
         <div class="contact-item">
           <div class="contact-ico">✉️</div>
-          <div>
-            <div class="contact-key">Email</div>
-            <div class="contact-val">
-              <a href="mailto:engineeringindkab@gmail.com">engineeringindkab@gmail.com</a>
-            </div>
-          </div>
+          <div><div class="contact-key">Email</div><div class="contact-val"><a href="mailto:engineeringindkab@gmail.com">engineeringindkab@gmail.com</a></div></div>
         </div>
       </div>
       <div class="reg-info">
-        <div class="reg-row">
-          <div class="reg-key">GST Number</div>
-          <div class="reg-val">27AADFI4354A1ZS</div>
-        </div>
-        <div class="reg-row">
-          <div class="reg-key">MSME Registration</div>
-          <div class="reg-val">UDYAM-MH-04-0201426</div>
-        </div>
-        <div class="reg-row" style="background: rgba(200,134,10,0.05); border-color: rgba(200,134,10,0.3);">
-          <div class="reg-key" style="color: var(--accent);">Ready to Serve</div>
-          <div class="reg-val" style="color: var(--light); font-family: 'Barlow', sans-serif; font-size: 14px; line-height: 1.6;">
-            Happy to serve in standard / customized materials &amp; sizes for all listed components.
-          </div>
+        <div class="reg-row"><div class="reg-key">GST Number</div><div class="reg-val">27AADFI4354A1ZS</div></div>
+        <div class="reg-row"><div class="reg-key">MSME Registration</div><div class="reg-val">UDYAM-MH-04-0201426</div></div>
+        <div class="reg-row" style="background:rgba(90,158,94,0.1);border-color:rgba(90,158,94,0.3);">
+          <div class="reg-key" style="color:var(--green-light);">Ready to Serve</div>
+          <div class="reg-val" style="color:rgba(255,255,255,0.75);font-family:'Barlow',sans-serif;font-size:14px;line-height:1.6;">Happy to serve in standard / customized materials &amp; sizes for all listed components.</div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- FOOTER -->
   <footer>
     <div class="footer-brand">Indkab Engineering — Chh. Sambhajinagar</div>
-    <div class="footer-copy">© 2017 Indkab Engineering. All Rights Reserved.</div>
+    <div class="footer-copy">© 2026 Indkab Engineering. All Rights Reserved.</div>
   </footer>
 
   <script>
-    // Scroll fade-in
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(e => {
-        if (e.isIntersecting) {
-          e.target.classList.add('visible');
-        }
-      });
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
     }, { threshold: 0.1 });
-
-    document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
-
-    // Stagger child animations
+    document.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
     document.querySelectorAll('.machining-grid .machine-item, .product-grid .product-card, .materials-grid .material-row').forEach((el, i) => {
       el.style.transitionDelay = `${i * 40}ms`;
     });
